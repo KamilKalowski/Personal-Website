@@ -1,0 +1,265 @@
+/* Kamiconda.css
+   Fully namespaced so NOTHING leaks into other pages.
+   (No generic selectors like .card/.title/.type-line without a kamiconda parent.)
+*/
+
+.kamiconda-boot {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.kamiconda-content {
+  position: relative;
+  z-index: 1;
+
+  /* IMPORTANT: this creates “safe area” so characters/glow aren’t clipped */
+  padding: 6px 10px;
+
+  /* keep lines from touching CRT edges */
+  max-width: 100%;
+}
+
+.kamiconda-boot-inner {
+  border: 1px solid rgba(0, 255, 170, 0.35);
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 14px;
+  padding: 14px 16px;
+  backdrop-filter: blur(6px);
+
+  color: #bfffdc;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: 0 0 12px rgba(0, 255, 170, 0.35);
+}
+
+.kamiconda-boot-sub {
+  margin-top: 8px;
+  font-size: 10px;
+  opacity: 0.85;
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+
+.kamiconda-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: radial-gradient(circle at 25% 25%, #0f0f16, #050507 70%);
+  color: #bfffdc;
+  font-family: 'Press Start 2P', 'VT323', 'Fira Code', 'IBM Plex Mono', monospace;
+
+  padding: 28px;
+}
+
+.kamiconda-crt {
+  width: min(920px, 94vw);
+  min-height: 72vh;
+  padding: 34px 38px 42px;
+
+  background: #0d0d0f;
+  border: 2px solid #1c1c22;
+  border-radius: 18px;
+
+  box-shadow:
+    0 22px 48px rgba(0, 0, 0, 0.65),
+    0 0 0 1px #111,
+    inset 0 0 22px rgba(0, 255, 170, 0.18);
+
+  position: relative;
+  overflow: hidden; /* keeps scanlines + glow clipped cleanly */
+
+  animation: kamiconda-flicker 2.8s infinite steps(2, end);
+}
+
+.kamiconda-crt::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+
+  background-image: radial-gradient(rgba(255,255,255,0.04) 1px, rgba(0,0,0,0) 1px);
+  background-size: 3px 3px;
+  opacity: 0.10;
+  mix-blend-mode: overlay;
+
+  animation: kamiconda-noise 0.18s infinite steps(2, end);
+}
+
+@keyframes kamiconda-flicker {
+  0%   { filter: brightness(1) contrast(1); transform: translate(0, 0); }
+  6%   { filter: brightness(1.03) contrast(1.02); transform: translate(0.2px, -0.2px); }
+  7%   { filter: brightness(0.98) contrast(1.02); transform: translate(-0.2px, 0.2px); }
+  8%   { filter: brightness(1.01) contrast(1); transform: translate(0, 0); }
+  60%  { filter: brightness(1) contrast(1); transform: translate(0, 0); }
+  61%  { filter: brightness(1.02) contrast(1.01); transform: translate(0.15px, 0); }
+  62%  { filter: brightness(1) contrast(1); transform: translate(0, 0); }
+  100% { filter: brightness(1) contrast(1); transform: translate(0, 0); }
+}
+
+/* Scanlines overlay */
+.kamiconda-scanlines {
+  position: absolute;
+  inset: 0;
+
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.10),
+    rgba(255, 255, 255, 0.10) 1px,
+    rgba(0, 0, 0, 0) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+
+  mix-blend-mode: soft-light;
+  opacity: 0.32;
+  pointer-events: none;
+  z-index: 5; /* above text + mask */
+}
+
+/* Base text line */
+.kamiconda-text {
+  position: relative;
+  z-index: 1;
+
+  color: #bfffdc;
+  text-shadow:
+    0 0 10px rgba(0, 255, 170, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.06),
+    0 -1px 0 rgba(0, 0, 0, 0.55);
+  letter-spacing: 0.04em;
+
+  /* pixel-ish vibe */
+  -webkit-font-smoothing: none;
+  font-smooth: never;
+
+  margin-bottom: 8px;
+}
+
+/* Separator line (---) */
+.kamiconda-sep {
+  height: 12px;
+  margin-bottom: 8px;
+}
+
+/* Prevent interactions until animation done (optional overlay) */
+.kamiconda-blocker {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+}
+
+/* ===== Typing / reveal effect (fully scoped) ===== */
+
+.kamiconda-crt .type-line {
+  position: relative;
+  display: block;
+
+  /* IMPORTANT: typing works best with no wrap */
+  white-space: nowrap;
+  overflow: hidden;
+
+  line-height: 1.45;
+  isolation: isolate;
+
+  /* typing reveal */
+  width: 0ch;
+  animation: 
+    kamiconda-type var(--dur, 1.5s) steps(var(--steps, 60), end) forwards,
+    kamiconda-line-flicker 0.22s infinite steps(2, end);
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes kamiconda-line-flicker {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.06); }
+  100% { filter: brightness(1); }
+}
+
+@keyframes kamiconda-type {
+  to { width: var(--w, 40ch); }
+}
+
+@keyframes kamiconda-sweep {
+  to { transform: translateX(115%); }
+}
+
+
+@keyframes kamiconda-noise {
+  0%   { transform: translate(0, 0); opacity: 0.08; }
+  50%  { transform: translate(-0.6px, 0.4px); opacity: 0.12; }
+  100% { transform: translate(0.4px, -0.6px); opacity: 0.09; }
+}
+
+.kamiconda-crt .type-line::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  /* follow the typed width */
+  left: var(--w, 40ch);
+  width: 18ch;
+
+  background: radial-gradient(circle at 0% 50%, rgba(0,255,170,0.22), rgba(0,0,0,0) 60%);
+  opacity: 0.35;
+  mix-blend-mode: screen;
+  pointer-events: none;
+
+  transform: translateX(-16ch);
+  animation: kamiconda-glow var(--dur, 1.5s) linear forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes kamiconda-glow {
+  to { transform: translateX(0ch); }
+}
+
+/* Small screen tweaks */
+@media (max-width: 768px) {
+  .kamiconda-screen {
+    padding: 18px;
+  }
+
+  .kamiconda-crt {
+    width: min(920px, 96vw);
+    padding: 24px 20px 28px;
+    min-height: 70vh;
+  }
+
+  .kamiconda-text {
+    margin-bottom: 10px;
+    letter-spacing: 0.03em;
+  }
+}
+
+.kamiconda-cursor {
+  display: inline-block;
+  margin-left: 6px;
+  transform: translateY(1px);
+  opacity: 1;
+  animation: kamiconda-blink 0.9s steps(1, end) infinite;
+}
+
+@keyframes kamiconda-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Respect reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .kamiconda-crt,
+  .kamiconda-crt::before,
+  .kamiconda-cursor {
+    animation: none !important;
+  }
+}

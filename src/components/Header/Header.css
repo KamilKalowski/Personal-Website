@@ -1,0 +1,183 @@
+/* Header.css */
+
+.header {
+  background-color: transparent; /* transparent */
+  padding: 50px 0; /* vertical padding only */
+}
+
+.header-inner {
+  width: min(1100px, 100%);
+  margin: 0 auto;          /* centers container */
+  padding: 0 56px;         /* moves away from left edge */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.brand {
+  position: relative; /* Establish a positioning context */
+  font-family: var(--display-font);
+  font-weight: 800;
+  font-size: 32px;
+  letter-spacing: 0.08em;
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 20px;
+
+  display: inline-flex; /* Align the text stack */
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.brand-name {
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.brand-stars {
+  font-size: 18px;
+  letter-spacing: 0.35em;
+  color: #ff4d4d;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.nav-links {
+  display: flex;      /* Align items in a row */
+  padding-left: 0;    /* No extra padding at the start */
+}
+
+.nav-links a {
+  color: #f5f5f5;
+  font-family: var(--body-font);
+  text-decoration: none;
+  margin-right: 20px;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.nav-links a:visited {
+  color: #f5f5f5;
+}
+
+.nav-links a:hover {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.nav-links a:last-child {
+  margin-right: 0;
+}
+
+.kamiconda-badge {
+  text-decoration: none;
+  color: #d9ffe8;
+  border: 1px solid rgba(140, 255, 200, 0.35);
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  padding: 10px 12px;
+  align-self: flex-end;
+  backdrop-filter: blur(6px);
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  white-space: nowrap;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.kamiconda-badge:hover {
+  transform: translateY(-2px);
+  background: rgba(0, 0, 0, 0.45);
+  border-color: rgba(140, 255, 200, 0.55);
+}
+
+.kamiconda-badge-title {
+  font-family: var(--display-font);
+  letter-spacing: 0.10em;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.kamiconda-badge-sub {
+  font-family: var(--body-font);
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+@media (max-width: 768px) {
+  .header-inner { padding: 0 20px; }
+  .kamiconda-badge { display: none; } /* optional */
+}
+
+.header-right {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;   /* <-- stack vertically */
+  align-items: flex-end;    /* <-- right-align the stack */
+  gap: 10px;
+  padding-top: 2px;         /* tiny nudge to match baseline */
+}
+
+/* 2001 BIOS clock badge */
+.kamiconda-clock {
+  position: relative;
+  padding: 10px 14px 9px;
+  border-radius: 14px;
+
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(230,230,230,0.88));
+  box-shadow:
+    0 10px 24px rgba(0,0,0,0.28),
+    inset 0 1px 0 rgba(255,255,255,0.55);
+
+  overflow: hidden;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.kamiconda-clock-text {
+  display: block;
+  font-family: 'Press Start 2P', 'VT323', 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: #0b0b0d;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.55);
+}
+
+/* scanlines like your screenshot */
+.kamiconda-clock-scan {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.28;
+  mix-blend-mode: multiply;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.22),
+    rgba(0,0,0,0.22) 1px,
+    rgba(0,0,0,0) 3px,
+    rgba(0,0,0,0) 4px
+  );
+}

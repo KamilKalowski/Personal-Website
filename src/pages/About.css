@@ -1,0 +1,61 @@
+.about-page {
+  min-height: calc(100vh - 140px);
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  padding: 28px 56px 60px;
+
+  color: rgba(255, 255, 255, 0.92);
+  font-family: var(--body-font);
+
+  position: relative;
+  z-index: 1;
+}
+
+.about-copy {
+  max-width: 72ch;
+  font-size: 18px;
+  line-height: 1.75;
+  letter-spacing: 0.01em;
+
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  padding: 18px 20px;
+  backdrop-filter: blur(6px);
+}
+
+.about-movies {
+  margin-top: 26px;
+
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  padding: 18px 20px;
+  backdrop-filter: blur(6px);
+}
+
+.about-movies h2 {
+  margin: 0 0 12px;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.about-movies ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.about-movies li {
+  margin: 6px 0;
+  opacity: 0.92;
+}
+
+@media (max-width: 768px) {
+  .about-page {
+    padding: 18px 20px 42px;
+  }
+  .about-copy {
+    font-size: 16px;
+  }
+}

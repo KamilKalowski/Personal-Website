@@ -1,0 +1,41 @@
+.footer {
+    background-color: black; /* Or any color you'd like */
+    color: white;
+    padding: 20px 0; /* Adjust vertical padding as needed */
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically if needed */
+  }
+  
+  .footer-icons a {
+    margin-right: 20px; /* Space between icons */
+    display: inline-flex; /* Aligns the icon properly within the link */
+  }
+  
+  .footer-icons a:last-child {
+    margin-right: 0; /* Removes margin from the last item */
+  }
+  
+  .footer-icons img {
+    height: 30px; /* Control the size of the icons */
+    width: auto;
+    object-fit: contain;
+    transition: filter 0.3s ease; /* Smooth transition for the filter effect */
+    filter: grayscale(100%); /* Makes the image grayscale, which should look greyish on a colored background */
+  }
+  
+  .footer-icons img:hover {
+    filter: grayscale(0) brightness(1); /* Adjusts the image to full color and normal brightness */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .footer-icons a {
+      margin-right: 10px; /* Adjust margin for smaller screens */
+    }
+  
+    .footer-icons img {
+      height: 30px; /* Smaller icons for smaller screens */
+    }
+  }
+  

@@ -1,0 +1,75 @@
+.projects-page {
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: url('../assets/images/backgrounds/interstellar.jpg') center / cover fixed;
+  isolation: isolate;
+  min-height: 70vh;
+}
+
+.projects-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 120% at 30% 20%, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.9));
+  z-index: 0;
+}
+
+.projects-content {
+  position: relative;
+  z-index: 1;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.projects-content h1 {
+  margin: 0;
+  font-family: var(--display-font);
+  letter-spacing: 0.06em;
+}
+
+.projects-sub {
+  margin: 0;
+  color: #d8d8d8;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.project-card {
+  background: rgba(15, 15, 20, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+}
+
+.project-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.project-stack {
+  color: #9fb7ff;
+  font-size: 0.95rem;
+  margin: 4px 0 8px;
+}
+
+.project-description {
+  margin: 0;
+  color: #e4e4e4;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .projects-content {
+    padding: 32px 24px;
+  }
+}
