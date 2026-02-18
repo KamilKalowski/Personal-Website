@@ -3,12 +3,13 @@
 .header {
   background-color: transparent; /* transparent */
   padding: 50px 0; /* vertical padding only */
+  overflow-x: clip;
 }
 
 .header-inner {
-  width: min(1100px, 100%);
+  width: min(1400px, 100%);
   margin: 0 auto;          /* centers container */
-  padding: 0 56px;         /* moves away from left edge */
+  padding: 0 90px;         /* moves away from left edge */
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -127,8 +128,28 @@
 }
 
 @media (max-width: 768px) {
-  .header-inner { padding: 0 20px; }
-  .kamiconda-badge { display: none; } /* optional */
+  .header {
+    padding: 28px 0;
+  }
+
+  .header-inner {
+    padding: 0 18px;
+    width: 100%;
+  }
+
+  .kamiconda-badge {
+    display: none;
+  }
+
+  .nav-links a {
+    font-size: 16px;
+    padding: 8px;
+    margin-right: 10px;
+  }
+
+  .brand {
+    font-size: 26px;
+  }
 }
 
 .header-right {

@@ -1,20 +1,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600&display=swap');
 
 :root {
-    --display-font: 'Bebas Neue', 'Anton', 'Impact', system-ui, sans-serif;
-    --body-font: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --display-font: 'Bebas Neue', 'Anton', 'Impact', system-ui, sans-serif;
+  --body-font: 'Space Grotesk', 'Inter', system-ui, sans-serif;
 }
 
-* {
-    box-sizing: border-box
+/* Reset + layout safety */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden; /* prevents iOS horizontal swipe bug */
+  margin: 0;
+  padding: 0;
 }
 
 body {
-    margin: 0;
-    padding: 0;
-    color: #fff;
-    font-family: var(--body-font);
-    letter-spacing: 0.1px;
-    -webkit-font-smoothing: antialiased;
-    background: #000 url('./assets/images/backgrounds/moon_miss.jpg') center / cover fixed no-repeat;
+  color: #fff;
+  font-family: var(--body-font);
+  letter-spacing: 0.1px;
+  -webkit-font-smoothing: antialiased;
+
+  /* Default background (overridden per route in App.jsx) */
+  background: #000 url('./assets/images/backgrounds/moon_miss.jpg')
+    center / cover fixed no-repeat;
+
+  min-height: 100vh;
+}
+
+/* Make sure React root never causes overflow */
+#root {
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
 }

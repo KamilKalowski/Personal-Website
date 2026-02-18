@@ -12,7 +12,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import bgHome from './assets/images/backgrounds/moon_miss.jpg';
 import bgExperience from './assets/images/backgrounds/moon_high_def.jpg';
 import bgProjects from './assets/images/backgrounds/interstellar.jpg';
-import bgAbout from './assets/images/miscellaneous/scarface_world_is_yours.jpg';
+import bgAbout from './assets/images/backgrounds/scarface_world_is_yours.jpg';
 import meAndPops from './assets/images/backgrounds/me_and_pops.jpg';
 
 function App() {

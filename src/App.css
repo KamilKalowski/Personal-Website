@@ -19,4 +19,14 @@
 .landing-container {
   min-height: 100vh;
   width: 100%;
+  overflow-x: hidden;
 }
+
+@media (max-width: 768px) {
+  .shared-container {
+    padding: 0 18px;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
