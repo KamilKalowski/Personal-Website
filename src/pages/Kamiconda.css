@@ -227,18 +227,33 @@
 /* Small screen tweaks */
 @media (max-width: 768px) {
   .kamiconda-screen {
-    padding: 18px;
+    padding: 14px;
   }
 
   .kamiconda-crt {
-    width: min(920px, 96vw);
-    padding: 24px 20px 28px;
+    width: 100%;
+    padding: 20px 14px 22px;
     min-height: 70vh;
   }
 
-  .kamiconda-text {
-    margin-bottom: 10px;
-    letter-spacing: 0.03em;
+  /* KEY: allow wrapping on mobile so text stays visible */
+  .kamiconda-crt .type-line {
+    white-space: pre-wrap;        /* wrap */
+    overflow: hidden;             /* keep typing clip */
+    word-break: break-word;
+    overflow-wrap: anywhere;
+
+    /* stop width animation from forcing huge intrinsic widths */
+    width: auto;
+    max-width: 100%;
+
+    /* turn off the width-typing animation on mobile */
+    animation: kamiconda-line-flicker 0.22s infinite steps(2, end);
+  }
+
+  /* also kill the “typing glow cursor” that assumes a single line */
+  .kamiconda-crt .type-line::after {
+    display: none;
   }
 }
 

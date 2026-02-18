@@ -5,9 +5,10 @@ import './Kamiconda.css';
 const Kamiconda = () => {
   const navigate = useNavigate();
 
-  const speedMultiplier = 3;
+  const speedMultiplier = 1.5;
   const pauseMs = 140;
   const charMsBase = 18;
+  const startDelayMs = 1000
 
   const lines = useMemo(
     () => [
@@ -88,13 +89,13 @@ const Kamiconda = () => {
     const charMs = charMsBase * speedMultiplier;
 
     let cancelled = false;
-    let t = 0;
+    let t = startDelayMs;
     const timers = [];
 
     for (let i = 0; i < lines.length; i++) {
       const isSep = lines[i] === '---';
       const text = isSep ? '' : lines[i];
-      const durationMs = Math.max(350, text.length * charMs);
+      const durationMs = Math.max(1000, text.length * charMs);
 
       // start this line (cursor moves here)
       timers.push(
@@ -143,7 +144,7 @@ const Kamiconda = () => {
   }, [navigate, ready]);
 
   // render with cumulative delays (for CSS typing width animation)
-  let accumulatedDelay = 0;
+  let accumulatedDelay = booted ? startDelayMs : 0;
   const charMs = charMsBase * speedMultiplier;
 
   return (

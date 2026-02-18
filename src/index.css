@@ -3,6 +3,8 @@
 :root {
   --display-font: 'Bebas Neue', 'Anton', 'Impact', system-ui, sans-serif;
   --body-font: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  --page-max: 1100px;
+  --page-pad: 56px;
 }
 
 /* Reset + layout safety */

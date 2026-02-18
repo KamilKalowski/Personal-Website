@@ -7,11 +7,12 @@
 }
 
 .header-inner {
-  width: min(1400px, 100%);
-  margin: 0 auto;          /* centers container */
-  padding: 0 90px;         /* moves away from left edge */
+  width: 100%;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--page-pad);
+
   display: flex;
-  flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
   gap: 24px;

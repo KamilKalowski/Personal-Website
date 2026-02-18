@@ -18,8 +18,7 @@ const Contact = () => {
       return;
     }
 
-    // TODO: replace with your real email
-    const to = 'your@email.com';
+    const to = 'kamilkalowski@yahoo.com';
 
     const subject = topic?.trim()
       ? `[Contact] ${topic.trim()}`
@@ -94,7 +93,7 @@ const Contact = () => {
                 className="contact-input"
                 value={topic}
                 onChange={(e) => setTopic(e.target.value)}
-                placeholder="Quant stuff / systems / life / collab"
+                placeholder="anything technical / philosophical / art"
               />
             </div>
 
