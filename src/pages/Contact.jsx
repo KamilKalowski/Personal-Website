@@ -48,7 +48,7 @@ const Contact = () => {
           <header className="contact-header">
             <h1 className="contact-title">Contact Me</h1>
             <p className="contact-subtitle">
-              Leave a question, collab idea, or anything you’re curious about.
+              Let's shoot the shit
             </p>
           </header>
 

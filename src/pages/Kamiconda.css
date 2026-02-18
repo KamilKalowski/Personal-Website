@@ -185,6 +185,16 @@
   100% { filter: brightness(1); }
 }
 
+/* Hide BIOS lines until boot (all devices) */
+.kamiconda-screen.is-locked .type-line {
+  opacity: 0;
+}
+
+/* After boot, show them */
+.kamiconda-screen.is-booted .type-line {
+  opacity: 1;
+}
+
 @keyframes kamiconda-type {
   to { width: var(--w, 40ch); }
 }

@@ -148,7 +148,7 @@ const Kamiconda = () => {
   const charMs = charMsBase * speedMultiplier;
 
   return (
-    <div className="kamiconda-screen">
+    <div className={`kamiconda-screen ${booted ? 'is-booted' : 'is-locked'}`}>
       <div className="kamiconda-crt">
         <div className="kamiconda-scanlines" aria-hidden="true" />
         <div className="kamiconda-content">
