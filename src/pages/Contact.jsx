@@ -129,9 +129,6 @@ const Contact = () => {
             </div>
 
             <p className="contact-footnote">
-              No backend yet — this uses <code>mailto:</code> to open a prefilled email.
-              If you want true “submit without email client”, tell me whether you prefer
-              Formspree, Netlify Forms, or a tiny Vercel function.
             </p>
           </form>
         </div>

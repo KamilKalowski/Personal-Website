@@ -1,8 +1,3 @@
-/* Kamiconda.css
-   Fully namespaced so NOTHING leaks into other pages.
-   (No generic selectors like .card/.title/.type-line without a kamiconda parent.)
-*/
-
 .kamiconda-boot {
   position: absolute;
   inset: 0;
@@ -14,17 +9,6 @@
 
   background: rgba(0, 0, 0, 0.15);
   cursor: pointer;
-}
-
-.kamiconda-content {
-  position: relative;
-  z-index: 1;
-
-  /* IMPORTANT: this creates “safe area” so characters/glow aren’t clipped */
-  padding: 6px 10px;
-
-  /* keep lines from touching CRT edges */
-  max-width: 100%;
 }
 
 .kamiconda-boot-inner {
@@ -40,13 +24,7 @@
   text-shadow: 0 0 12px rgba(0, 255, 170, 0.35);
 }
 
-.kamiconda-boot-sub {
-  margin-top: 8px;
-  font-size: 10px;
-  opacity: 0.85;
-  letter-spacing: 0.06em;
-  text-transform: none;
-}
+/* ================= SCREEN ================= */
 
 .kamiconda-screen {
   min-height: 100vh;
@@ -56,10 +34,21 @@
 
   background: radial-gradient(circle at 25% 25%, #0f0f16, #050507 70%);
   color: #bfffdc;
-  font-family: 'Press Start 2P', 'VT323', 'Fira Code', 'IBM Plex Mono', monospace;
 
+  font-family: 'Press Start 2P', 'VT323', 'Fira Code', 'IBM Plex Mono', monospace;
   padding: 28px;
 }
+
+/* Hide lines until boot */
+.kamiconda-screen.is-locked .type-line {
+  opacity: 0;
+}
+
+.kamiconda-screen.is-booted .type-line {
+  opacity: 1;
+}
+
+/* ================= CRT FRAME ================= */
 
 .kamiconda-crt {
   width: min(920px, 94vw);
@@ -76,11 +65,12 @@
     inset 0 0 22px rgba(0, 255, 170, 0.18);
 
   position: relative;
-  overflow: hidden; /* keeps scanlines + glow clipped cleanly */
+  overflow: hidden;
 
   animation: kamiconda-flicker 2.8s infinite steps(2, end);
 }
 
+/* subtle noise */
 .kamiconda-crt::before {
   content: '';
   position: absolute;
@@ -96,119 +86,54 @@
   animation: kamiconda-noise 0.18s infinite steps(2, end);
 }
 
-@keyframes kamiconda-flicker {
-  0%   { filter: brightness(1) contrast(1); transform: translate(0, 0); }
-  6%   { filter: brightness(1.03) contrast(1.02); transform: translate(0.2px, -0.2px); }
-  7%   { filter: brightness(0.98) contrast(1.02); transform: translate(-0.2px, 0.2px); }
-  8%   { filter: brightness(1.01) contrast(1); transform: translate(0, 0); }
-  60%  { filter: brightness(1) contrast(1); transform: translate(0, 0); }
-  61%  { filter: brightness(1.02) contrast(1.01); transform: translate(0.15px, 0); }
-  62%  { filter: brightness(1) contrast(1); transform: translate(0, 0); }
-  100% { filter: brightness(1) contrast(1); transform: translate(0, 0); }
+/* ================= CONTENT ================= */
+
+.kamiconda-content {
+  position: relative;
+  z-index: 1;
+  padding: 6px 10px;
+  max-width: 100%;
 }
 
-/* Scanlines overlay */
-.kamiconda-scanlines {
-  position: absolute;
-  inset: 0;
-
-  background: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.10),
-    rgba(255, 255, 255, 0.10) 1px,
-    rgba(0, 0, 0, 0) 3px,
-    rgba(0, 0, 0, 0) 4px
-  );
-
-  mix-blend-mode: soft-light;
-  opacity: 0.32;
-  pointer-events: none;
-  z-index: 5; /* above text + mask */
-}
-
-/* Base text line */
 .kamiconda-text {
   position: relative;
   z-index: 1;
 
   color: #bfffdc;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+
   text-shadow:
     0 0 10px rgba(0, 255, 170, 0.18),
     0 1px 0 rgba(255, 255, 255, 0.06),
     0 -1px 0 rgba(0, 0, 0, 0.55);
-  letter-spacing: 0.04em;
 
-  /* pixel-ish vibe */
   -webkit-font-smoothing: none;
-  font-smooth: never;
-
-  margin-bottom: 8px;
 }
 
-/* Separator line (---) */
 .kamiconda-sep {
   height: 12px;
   margin-bottom: 8px;
 }
 
-/* Prevent interactions until animation done (optional overlay) */
-.kamiconda-blocker {
-  position: absolute;
-  inset: 0;
-  z-index: 10;
-}
-
-/* ===== Typing / reveal effect (fully scoped) ===== */
+/* ================= DESKTOP TYPING ================= */
 
 .kamiconda-crt .type-line {
-  position: relative;
   display: block;
-
-  /* IMPORTANT: typing works best with no wrap */
   white-space: nowrap;
   overflow: hidden;
-
   line-height: 1.45;
-  isolation: isolate;
-
-  /* typing reveal */
   width: 0ch;
-  animation: 
+
+  animation:
     kamiconda-type var(--dur, 1.5s) steps(var(--steps, 60), end) forwards,
     kamiconda-line-flicker 0.22s infinite steps(2, end);
+
   animation-delay: var(--delay, 0s);
-}
-
-@keyframes kamiconda-line-flicker {
-  0% { filter: brightness(1); }
-  50% { filter: brightness(1.06); }
-  100% { filter: brightness(1); }
-}
-
-/* Hide BIOS lines until boot (all devices) */
-.kamiconda-screen.is-locked .type-line {
-  opacity: 0;
-}
-
-/* After boot, show them */
-.kamiconda-screen.is-booted .type-line {
-  opacity: 1;
-  max-height: none;
 }
 
 @keyframes kamiconda-type {
   to { width: var(--w, 40ch); }
-}
-
-@keyframes kamiconda-sweep {
-  to { transform: translateX(115%); }
-}
-
-
-@keyframes kamiconda-noise {
-  0%   { transform: translate(0, 0); opacity: 0.08; }
-  50%  { transform: translate(-0.6px, 0.4px); opacity: 0.12; }
-  100% { transform: translate(0.4px, -0.6px); opacity: 0.09; }
 }
 
 .kamiconda-crt .type-line::after {
@@ -217,7 +142,6 @@
   top: 0;
   bottom: 0;
 
-  /* follow the typed width */
   left: var(--w, 40ch);
   width: 18ch;
 
@@ -235,46 +159,18 @@
   to { transform: translateX(0ch); }
 }
 
-/* Small screen tweaks */
-@media (max-width: 768px) {
-  .kamiconda-crt .type-line {
-    white-space: pre-wrap;
-    word-break: break-word;
-    overflow-wrap: anywhere;
-  }
-
-  /* only animate/reveal AFTER boot */
-  .kamiconda-screen.is-booted .kamiconda-crt .type-line {
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-
-    animation:
-      kamiconda-reveal var(--dur, 1.5s) steps(1, end) forwards,
-      kamiconda-line-flicker 0.22s infinite steps(2, end);
-    animation-delay: var(--delay, 0s);
-  }
-
-  /* keep locked fully hidden */
-  .kamiconda-screen.is-locked .kamiconda-crt .type-line {
-    opacity: 0 !important;
-    max-height: 0 !important;
-    overflow: hidden;
-    animation: none !important;
-  }
-
-  @keyframes kamiconda-reveal {
-    to { max-height: 200px; opacity: 1; }
-  }
-
-  .kamiconda-crt .type-line::after { display: none; }
+@keyframes kamiconda-line-flicker {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.06); }
+  100% { filter: brightness(1); }
 }
+
+/* ================= CURSOR ================= */
 
 .kamiconda-cursor {
   display: inline-block;
   margin-left: 6px;
   transform: translateY(1px);
-  opacity: 1;
   animation: kamiconda-blink 0.9s steps(1, end) infinite;
 }
 
@@ -283,7 +179,78 @@
   50%, 100% { opacity: 0; }
 }
 
-/* Respect reduced-motion */
+/* ================= MOBILE FIX (iOS SAFE) ================= */
+
+@media (max-width: 768px) {
+
+  .kamiconda-screen {
+    padding: 14px;
+  }
+
+  .kamiconda-crt {
+    width: 100%;
+    padding: 20px 14px 22px;
+    min-height: 70vh;
+  }
+
+  /* Allow wrapping */
+  .kamiconda-crt .type-line {
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+
+    width: auto;
+    max-width: 100%;
+    overflow: visible;
+  }
+
+  /* Hide while locked */
+  .kamiconda-screen.is-locked .kamiconda-crt .type-line {
+    opacity: 0 !important;
+    animation: none !important;
+  }
+
+  /* Fade lines in sequentially using delay */
+  .kamiconda-screen.is-booted .kamiconda-crt .type-line {
+    opacity: 0;
+
+    animation:
+      kamiconda-fadein 0.01s linear forwards,
+      kamiconda-line-flicker 0.22s infinite steps(2, end);
+
+    animation-delay: var(--delay, 0s), var(--delay, 0s);
+  }
+
+  @keyframes kamiconda-fadein {
+    to { opacity: 1; }
+  }
+
+  /* Disable desktop glow typing effect */
+  .kamiconda-crt .type-line::after {
+    display: none;
+  }
+}
+
+/* ================= CRT EFFECTS ================= */
+
+@keyframes kamiconda-flicker {
+  0%   { filter: brightness(1) contrast(1); }
+  6%   { filter: brightness(1.03) contrast(1.02); }
+  7%   { filter: brightness(0.98) contrast(1.02); }
+  8%   { filter: brightness(1.01) contrast(1); }
+  60%  { filter: brightness(1) contrast(1); }
+  61%  { filter: brightness(1.02) contrast(1.01); }
+  100% { filter: brightness(1) contrast(1); }
+}
+
+@keyframes kamiconda-noise {
+  0%   { transform: translate(0, 0); opacity: 0.08; }
+  50%  { transform: translate(-0.6px, 0.4px); opacity: 0.12; }
+  100% { transform: translate(0.4px, -0.6px); opacity: 0.09; }
+}
+
+/* ================= REDUCED MOTION ================= */
+
 @media (prefers-reduced-motion: reduce) {
   .kamiconda-crt,
   .kamiconda-crt::before,
