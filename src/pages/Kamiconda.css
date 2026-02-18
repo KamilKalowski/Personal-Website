@@ -188,6 +188,7 @@
 /* Hide BIOS lines until boot (all devices) */
 .kamiconda-screen.is-locked .type-line {
   opacity: 0;
+  max-height: 0;
 }
 
 /* After boot, show them */
@@ -253,12 +254,21 @@
     word-break: break-word;
     overflow-wrap: anywhere;
 
-    /* stop width animation from forcing huge intrinsic widths */
-    width: auto;
-    max-width: 100%;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
 
-    /* turn off the width-typing animation on mobile */
-    animation: kamiconda-line-flicker 0.22s infinite steps(2, end);
+    animation:
+      kamiconda-reveal var(--dur, 1.5s) steps(1, end) forwards,
+      kamiconda-line-flicker 0.22s infinite steps(2, end);
+    animation-delay: var(--delay, 0s);
+  }
+
+    @keyframes kamiconda-reveal {
+    to {
+      max-height: 200px; /* big enough for any line */
+      opacity: 1;
+    }
   }
 
   /* also kill the “typing glow cursor” that assumes a single line */

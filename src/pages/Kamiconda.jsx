@@ -162,7 +162,7 @@ const Kamiconda = () => {
             const isSep = line === '---';
             const text = isSep ? '' : line;
 
-            const durationMs = Math.max(350, text.length * charMs);
+            const durationMs = Math.max(1000, text.length * charMs);
             const steps = Math.min(Math.max(text.length, 12), 160);
 
             // IMPORTANT: width in ch should roughly match chars.
