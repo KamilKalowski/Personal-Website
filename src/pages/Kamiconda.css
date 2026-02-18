@@ -188,12 +188,12 @@
 /* Hide BIOS lines until boot (all devices) */
 .kamiconda-screen.is-locked .type-line {
   opacity: 0;
-  max-height: 0;
 }
 
 /* After boot, show them */
 .kamiconda-screen.is-booted .type-line {
   opacity: 1;
+  max-height: none;
 }
 
 @keyframes kamiconda-type {
@@ -237,23 +237,14 @@
 
 /* Small screen tweaks */
 @media (max-width: 768px) {
-  .kamiconda-screen {
-    padding: 14px;
-  }
-
-  .kamiconda-crt {
-    width: 100%;
-    padding: 20px 14px 22px;
-    min-height: 70vh;
-  }
-
-  /* KEY: allow wrapping on mobile so text stays visible */
   .kamiconda-crt .type-line {
-    white-space: pre-wrap;        /* wrap */
-    overflow: hidden;             /* keep typing clip */
+    white-space: pre-wrap;
     word-break: break-word;
     overflow-wrap: anywhere;
+  }
 
+  /* only animate/reveal AFTER boot */
+  .kamiconda-screen.is-booted .kamiconda-crt .type-line {
     max-height: 0;
     opacity: 0;
     overflow: hidden;
@@ -264,17 +255,19 @@
     animation-delay: var(--delay, 0s);
   }
 
-    @keyframes kamiconda-reveal {
-    to {
-      max-height: 200px; /* big enough for any line */
-      opacity: 1;
-    }
+  /* keep locked fully hidden */
+  .kamiconda-screen.is-locked .kamiconda-crt .type-line {
+    opacity: 0 !important;
+    max-height: 0 !important;
+    overflow: hidden;
+    animation: none !important;
   }
 
-  /* also kill the “typing glow cursor” that assumes a single line */
-  .kamiconda-crt .type-line::after {
-    display: none;
+  @keyframes kamiconda-reveal {
+    to { max-height: 200px; opacity: 1; }
   }
+
+  .kamiconda-crt .type-line::after { display: none; }
 }
 
 .kamiconda-cursor {
